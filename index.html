@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="OHP-RL interprets corrective human interventions as preferences and uses a state-dependent gate to guide real-world robot learning. Accepted at IEEE Robotics and Automation Letters.">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="citation_title" content="OHP-RL: Online Human Preference as Guidance in Reinforcement Learning for Robot Manipulation">
+  <meta name="citation_author" content="Yunyang Mo">
+  <meta name="citation_author" content="Jian Li">
+  <meta name="citation_author" content="Qiwei Wu">
+  <meta name="citation_author" content="Yihang Kang">
+  <meta name="citation_author" content="Renjing Xu">
+  <meta name="citation_publication_date" content="2026">
+  <meta name="citation_pdf_url" content="https://arxiv.org/pdf/2605.15971">
+  <title>OHP-RL: Online Human Preference as Guidance in Reinforcement Learning for Robot Manipulation</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-nav">
+    <div class="container nav-inner">
+      <a class="wordmark" href="#top">OHP-RL</a>
+      <nav aria-label="Page sections">
+        <a href="#abstract">Abstract</a>
+        <a href="#method">Method</a>
+        <a href="#experiments">Experiments</a>
+        <a href="#bibtex">BibTeX</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero container" aria-labelledby="paper-title">
+      <p class="venue">Accepted at IEEE Robotics and Automation Letters (RA-L)</p>
+      <h1 id="paper-title"><span>OHP-RL:</span> Online Human Preference as Guidance in Reinforcement Learning for Robot Manipulation</h1>
+      <p class="authors">
+        <span>Yunyang Mo<sup>*</sup></span>
+        <span>Jian Li<sup>*</sup></span>
+        <span>Qiwei Wu</span>
+        <span>Yihang Kang</span>
+        <span>Renjing Xu<sup>†</sup></span>
+      </p>
+      <p class="affiliation">The Hong Kong University of Science and Technology (Guangzhou)</p>
+      <p class="author-note">* Equal contribution. &nbsp; † Corresponding author.</p>
+      <div class="paper-links">
+        <a class="button primary" href="https://arxiv.org/abs/2605.15971" target="_blank" rel="noopener">Paper · arXiv <span aria-hidden="true">↗</span></a>
+        <a class="button" href="#bibtex">BibTeX</a>
+      </div>
+    </section>
+
+    <section id="abstract" class="section container" aria-labelledby="abstract-title">
+      <h2 id="abstract-title">Abstract</h2>
+      <div class="abstract-text">
+        <p>While reinforcement learning (RL) enables robots to acquire skills autonomously, its real-world deployment is severely limited by <strong>inefficient and unsafe exploration</strong>. Human-in-the-loop interventions offer a practical solution, yet existing methods typically exploit these interventions as auxiliary training signals, without fully capturing the richer information they provide about when and how autonomy should be guided.</p>
+        <p>Human interventions often encode relative preferences over behavior under safety and task constraints, rather than prescribing exact actions to imitate. Motivated by this perspective, we propose <strong>Online Human Preference as Guidance in Reinforcement Learning (OHP-RL)</strong>, a framework that leverages human interventions as preference information to guide policy learning. OHP-RL introduces a <strong>state-dependent preference gate</strong> that adaptively regulates when and to what extent human interventions should shape policy learning. This design enables the agent to benefit from intermittent and imperfect human feedback while preserving autonomous exploration and stable policy optimization.</p>
+        <p>We evaluate OHP-RL on three challenging <strong>real-world contact-rich manipulation tasks</strong> on a Franka robot. Across all tasks, OHP-RL consistently achieves strong success rates, faster convergence, and substantially lower human intervention effort than prior approaches. Moreover, the learned policies exhibit more stable and human-aligned behavior throughout training.</p>
+      </div>
+    </section>
+
+    <section id="method" class="section container" aria-labelledby="method-title">
+      <h2 id="method-title">Method</h2>
+      <figure class="method-figure">
+        <a href="assets/papers/method.pdf" target="_blank" rel="noopener" aria-label="Open the original method diagram as a PDF">
+          <picture>
+            <source srcset="assets/images/method.svg" type="image/svg+xml">
+            <img src="assets/images/method.png" width="2200" height="1100" loading="lazy" decoding="async"
+              alt="OHP-RL pipeline: perception, policy and human intervention during data collection; online and preference buffers; state-dependent gate and guided actor updates during learning.">
+          </picture>
+        </a>
+
+      </figure>
+    </section>
+
+    <section id="experiments" class="section container" aria-labelledby="experiments-title">
+      <h2 id="experiments-title">Experiments</h2>
+
+      <div class="experiment-block">
+        <h3>Experimental setup</h3>
+        <div class="setup-grid">
+          <figure>
+            <a href="assets/images/press_setup.png" target="_blank" rel="noopener" aria-label="Open the full-resolution Press Bell setup image">
+              <img src="assets/images/press_setup.png" width="863" height="863" loading="lazy" decoding="async" alt="Press Bell setup with a random initial gripper position and a 3.2 cm bell.">
+            </a>
+            <figcaption>Press Bell</figcaption>
+          </figure>
+          <figure>
+            <a href="assets/images/push_setup.png" target="_blank" rel="noopener" aria-label="Open the full-resolution Push Ball setup image">
+              <img src="assets/images/push_setup.png" width="2047" height="2047" loading="lazy" decoding="async" alt="Push Ball setup: a ball starts at a random position on the track and is pushed toward the target.">
+            </a>
+            <figcaption>Push Ball</figcaption>
+          </figure>
+          <figure>
+            <a href="assets/images/move_setup.png" target="_blank" rel="noopener" aria-label="Open the full-resolution Move Sand Bag setup image">
+              <img src="assets/images/move_setup.png" width="1983" height="1983" loading="lazy" decoding="async" alt="Move Sand Bag setup with a random initial sandbag position and a basket target.">
+            </a>
+            <figcaption>Move Sand Bag</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="experiment-block training-block">
+        <h3 id="training-title">Training</h3>
+        <div class="task-tabs" role="tablist" aria-label="Training task">
+          <button id="tab-press" type="button" role="tab" aria-selected="true" aria-controls="training-panel" tabindex="0" data-task="press">Press Bell</button>
+          <button id="tab-push" type="button" role="tab" aria-selected="false" aria-controls="training-panel" tabindex="-1" data-task="push">Push Ball</button>
+          <button id="tab-move" type="button" role="tab" aria-selected="false" aria-controls="training-panel" tabindex="-1" data-task="move">Move Sand Bag</button>
+        </div>
+        <div id="training-panel" class="training-panel" role="tabpanel" aria-labelledby="tab-press">
+          <video id="training-video" controls playsinline preload="metadata"
+            src="assets/videos/press_bell.mp4" poster="assets/images/press_bell_poster.jpg"
+            width="718" height="634" aria-label="Press Bell training video">
+            Your browser does not support video. <a href="assets/videos/press_bell.mp4">Download the training video</a>.
+          </video>
+        </div>
+        <p id="training-status" class="sr-only" role="status" aria-live="polite"></p>
+        <p id="training-error" class="media-error" role="alert" hidden></p>
+        <noscript><p class="noscript-links">Training videos: <a href="assets/videos/press_bell.mp4">Press Bell</a> · <a href="assets/videos/push_ball.mp4">Push Ball</a> · <a href="assets/videos/move_sand_bag.mp4">Move Sand Bag</a></p></noscript>
+      </div>
+
+      <div class="experiment-block inference-block">
+        <h3>Inference</h3>
+        <video id="inference-video" class="inference-video" controls playsinline preload="metadata"
+          src="assets/videos/inference.mp4" poster="assets/images/inference_poster.jpg"
+          width="1208" height="708" aria-label="Inference results for all three real-world manipulation tasks">
+          Your browser does not support video. <a href="assets/videos/inference.mp4">Download the inference video</a>.
+        </video>
+        <p id="inference-error" class="media-error" role="alert" hidden></p>
+      </div>
+    </section>
+
+    <section id="bibtex" class="section container" aria-labelledby="bibtex-title">
+      <div class="citation-heading">
+        <h2 id="bibtex-title">BibTeX</h2>
+        <button id="copy-bibtex" class="button copy-button" type="button">Copy BibTeX</button>
+      </div>
+      <pre class="citation"><code id="bibtex-code">@misc{mo2026ohprl,
+  title = {{OHP-RL}: Online Human Preference as Guidance in
+           Reinforcement Learning for Robot Manipulation},
+  author = {Mo, Yunyang and Li, Jian and Wu, Qiwei and
+            Kang, Yihang and Xu, Renjing},
+  year = {2026},
+  eprint = {2605.15971},
+  archivePrefix = {arXiv},
+  primaryClass = {cs.RO},
+  url = {https://arxiv.org/abs/2605.15971},
+  note = {Accepted at IEEE Robotics and Automation Letters (RA-L)}
+}</code></pre>
+
+      <p id="copy-status" class="sr-only" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
